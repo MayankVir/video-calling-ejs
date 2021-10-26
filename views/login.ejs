@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="google-signin-client_id"
+      content="401680115319-ljth2d92o4tt9uboa3ffmsnc8fia707f.apps.googleusercontent.com"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="login.css"> -->
+    <title>Login - Video Chat application</title>
+  </head>
+  <style>
+    @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Product Sans";
+    }
+    body {
+      background: #bdc3c7;
+      background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+      background: linear-gradient(to right, #2c3e50, #bdc3c7)
+    }
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      height: 300px;
+      width: 500px;
+      background: #bdc3c7;
+      margin: 10em 0;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin: 2em 0 1em 0;
+      color: #202b36;
+    }
+    nav {
+   width: 100%;
+   /* background-color: #2c3e50; */
+   height: 70px;
+   transition: 0.8s all ease;
+}
+
+ul {
+   color: white;
+   margin-right: 50px;
+   display: flex;
+   justify-content: flex-end;
+   list-style: none;
+   font-size: 1.2rem;
+   letter-spacing: 1px;
+}
+li {
+   margin: 24px 30px;
+   cursor: pointer;
+   border-radius: 30px;
+}
+
+a {
+   text-decoration: none;
+   color: white;
+}
+
+a:hover {
+   color: rgb(173, 172, 172)
+}
+
+.nav__loginBtn {
+   padding: 8px 30px;
+   margin: 15px 30px;
+   font-size: 1.2rem;
+   height: 40px;
+   width: 200px;
+   border-radius: 30px;
+   background: white;
+   color: black;
+}
+
+.nav__loginBtn:hover {
+   padding: 6px 27px;
+   border: 2px solid white;
+   color: white;
+   background: #2C5364;
+   transition: 0.3s all ease-in;
+}
+  </style>
+  <body>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/dashboard">New Meeting</a></li>
+            <li><a href="/dashboard">Join Meeting</a></li>
+            <a href="/login" class="nav__loginBtn">Login / Signup</a>
+        </ul>
+    </nav>
+    <section>
+        <div class="card">
+            <h1>Login with Google</h1>
+            <div id="my-signin2"></div>
+        </div>
+    </section>
+  </body>
+  <script>
+    function onSuccess(googleUser) {
+      let id_token = googleUser.getAuthResponse().id_token;
+      console.log(id_token);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/login");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
+        if (xhr.responseText == "success") {
+          if(localStorage.getItem("email") == null) {
+            // console.log(googleUser.getBasicProfile());
+            localStorage.setItem("name", googleUser.getBasicProfile().getName())
+            localStorage.setItem("email", googleUser.getBasicProfile().getEmail())
+            localStorage.setItem("imgUrl", googleUser.getBasicProfile().getImageUrl())
+          }
+          signOut();
+          location.assign(`/dashboard`);
+        }
+      };
+      xhr.send(JSON.stringify({ token: id_token }));
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render("my-signin2", {
+        scope: "profile email",
+        width: 330,
+        height: 50,
+        longtitle: true,
+        theme: "dark",
+        onsuccess: onSuccess,
+        onfailure: onFailure
+      });
+    }
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log("User signed out.");
+      });
+    }
+  </script>
+  <script
+    src="https://apis.google.com/js/platform.js?onload=renderButton"
+    async
+    defer
+  ></script>
+</html>

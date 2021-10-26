@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta
+    name="google-signin-client_id"
+    content="401680115319-ljth2d92o4tt9uboa3ffmsnc8fia707f.apps.googleusercontent.com"
+  />
+  <script src="/socket.io/socket.io.js" ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Dashboard - Video Chat Application</title>
+</head>
+<body onload="fetchData()">
+  <nav>
+    <ul class="nav__links">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/newRoom">New Meeting</a></li>
+      <li><a href="/dashboard">Join Meeting</a></li>
+      <a href="/logout" onclick="signOut();">Sign out</a>
+    </ul>
+  </nav>
+  <section class="chatRoomsAndMsg">
+    <div class="chatRooms">
+      <h3>Rooms</h3>
+
+    </div>
+    <div class="chatMsgs">
+      <div class="chatNav">
+        <a href="" class="meetingAgain" onclick="meeting()"><i class="fas fa-video"></i></a>
+      </div>
+      <hr>
+      <ul class="messages">
+
+      </ul>
+      <div class="enterMsg">
+        <input type="text" placeholder="Enter your Message">
+        <!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> -->
+      </input>
+      </div>
+    </div>
+  </section>
+  
+</body>
+<script src="dashboard.js"></script>
+</html>

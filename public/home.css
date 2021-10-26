@@ -1,0 +1,137 @@
+@font-face {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+  }
+ 
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Product Sans";
+    
+ }
+ body {
+    background: #bdc3c7;
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+    background: linear-gradient(to left, #2c3e50, #bdc3c7);
+ }
+ nav {
+    width: 100%;
+    /* background-color: #2c3e50; */
+    height: 70px;
+    transition: 0.8s all ease;
+ }
+ 
+ ul {
+    color: white;
+    margin-right: 50px;
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+ }
+ li {
+    margin: 24px 30px;
+    cursor: pointer;
+    border-radius: 30px;
+ }
+ 
+ a {
+    text-decoration: none;
+    color: white;
+ }
+ 
+ a:hover {
+    color: rgb(173, 172, 172)
+ }
+ 
+ .nav__loginBtn {
+    padding: 8px 30px;
+    margin: 15px 30px;
+    font-size: 1.2rem;
+    height: 40px;
+    width: 200px;
+    border-radius: 30px;
+    background: white;
+    color: black;
+ }
+ 
+ .nav__loginBtn:hover {
+    padding: 6px 27px;
+    border: 2px solid white;
+    color: white;
+    background: #2C5364;
+    transition: 0.3s all ease-in;
+ }
+ 
+ .main {
+    /* background: rgb(216, 216, 216); */
+    background: #bdc3c7;
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+    background: linear-gradient(to left, #2c3e50, #bdc3c7);
+    width: 100%;
+    display: flex;
+    height: 88vh;
+ }
+ 
+ .main__left {
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+ }
+ 
+ 
+ .main__left > .main__headingTagline  {
+    margin: 20% 0% 10% 20%;
+ }
+ .main__headingTagline > h2 {
+    font-size: 2.35rem;
+    letter-spacing: 1.2px;
+    color: rgb(34, 34, 34)
+ }
+ .main__left p {
+    margin: 0.75em 0;
+    font-size: 1.2rem;
+    letter-spacing: 0.75px;
+ }
+ 
+ 
+ .main__headingBtn {
+    margin: 0% 0% 10% 20%;
+ }
+ .main__headingBtn > h2 {
+    font-size: 2.35rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    color: rgb(34, 34, 34);
+ }
+ .main__loginBtn {
+    background: #2C5364;
+    padding: 10px 100px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+ }
+ .main__loginBtn:hover {
+    border: 3px solid #2C5364;
+    background: white;
+    color: #2C5364;
+    transition: 0.3s all ease-in;
+ }
+ 
+ 
+ 
+ .main__right {
+    flex: 0.5;
+    margin: -12px 80px;
+ }
+ 
+ .main__imgRight {
+    height: 600px;
+    width: 600px;
+ }

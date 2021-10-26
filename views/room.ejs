@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href="styles.css"></link>
+    <script src="/socket.io/socket.io.js" ></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const ROOM_ID = "<%= roomId %>"
+    </script>
+</head>
+
+<body>
+    <section class="timeAndProfile">
+        <img class="bulb"src="bulb.png" alt="bulb">
+        <img class="podha"src="podha.png" alt="podha">
+        <img class="books"src="books.png" alt="books">
+        <hr>
+        <div class="dateAndTime"></div>
+        <div class="profile">
+            <div class="profileOptions">
+                <a href="/logout" onclick="signOut();">Sign out</a>
+            </div>
+        </div>
+    </section>
+    <section class="videoAndChat">
+        <div class="videoArea">
+            <!-- <div class="row row1"> -->
+                <!-- <h3>Be Right Back</h3> -->
+                <div class="tile" id="video-grid1">
+                </div>
+            <!-- </div> -->
+            <!-- <div class="row row2">
+                <div class="tile" id="video-grid3">
+                
+                </div>
+                <div class="tile" id="video-grid4">
+                
+                </div>
+            </div> -->
+        </div>
+        <div class="chatAndNotes">
+            <div class="notes">
+                <div class="notesHeading">
+                    <h4>Want to take notes ?</h4>
+                    <div class="hr"></div>
+                </div>
+                <div>
+                    <!-- <input type="text" placeholder="Note here"> -->
+                    <textarea rows="10" cols="50">
+                        </textarea>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="chatHeading">
+                    <h4>Let's Chat</h4>
+                    <div class="hr"></div>
+                </div>
+                <ul class="messages"></ul>
+                <div class="inputArea">
+                    <input type="text" class="chatText" placeholder="Enter message here">
+                    <button>SEND</button></input>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="meetingControls">
+            <div class="mainControls">
+                <div class="outerBRB">
+                    <div onclick="brbButton()"class="mainControls__options brb">
+                        BRB
+                        <div class="hoverBrb">
+                            On Hold
+                        </div>
+                    </div>
+                </div>
+                <div onclick="muteUnmute()" class="mainControls__options audio">
+                    <i class="fas fa-microphone"></i>
+                    <div class="hoverMuteUnmute">
+                        Mute/Unmute
+                    </div>
+                </div>
+                <!-- <div onclick="muteUnmute()" class="mainControls__options audio">
+                    <i class="fas fa-microphone"></i>
+                </div> -->
+                <div onclick = "playStopVideo()" class="mainControls__options video">
+                    <i class="fas fa-video"></i>
+                    <div class="hoverVideoButton">
+                        Video On/Off
+                    </div>
+                </div>
+                <!-- <div onclick = "playStopVideo()" class="mainControls__options video">
+                    <i class="fas fa-video"></i>
+                </div> -->
+                <div class="mainControls__options leave">
+                    <a href="/dashboard"><i class="fas fa-phone"></i></a>
+                    <div class="leaveMeeting">
+                        Leave Meeting
+                    </div>
+                </div>
+                <!-- <div class="mainControls__options leave">
+                    <a href="/dashboard"><i class="fas fa-phone"></i></a>
+                </div> -->
+            </div>
+            
+            <div class="extraControls">
+                <div class="extraControls__options screenshare" onclick="screenshare()">
+                    <i class="fas fa-tv"></i>
+                    <div class="hoverScreenshare">
+                        Screen Share
+                    </div>
+                </div>
+                <div class="extraControls__options meeetingDetails">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="roomDetails">
+                        <h3>Copy the room link from here: <br> </h3>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- <nav>
+        <div class="navBar__list">
+            <div class="navBar__listElement">
+                <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="navBar__listElement">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+            <div class="navBar__listElement"> 
+                <i class="fas fa-hand-paper"></i>
+            </div>
+            <hr>
+            <div onclick = "playStopVideo()" class="navBar__listElement video">
+                <i class="fas fa-video"></i>
+            </div>
+            <div onclick="muteUnmute()" class="navBar__listElement audio">
+                <i class="fas fa-microphone"></i>
+            </div>
+            <div class="navBar__listElement">
+                <img class ="screenshare" src="screenshare.png" alt="screenshare" />
+            </div>
+            <div class="navBar__listElement">
+                <div class="leave-meeting"><i class="fas fa-phone"></i>Leave</div>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <div class="main__videos">
+            <div id="video-grid">
+            
+            </div>
+
+        </div>
+        <div class="main__chat">
+            <div class="main__chatHeader">
+                <h5>Chat</h5>
+            </div>
+            
+            <div class="main__chatWindow">
+                <ul class="messages">
+
+                </ul>
+            </div>
+            <div class="main__chatInput">
+                <input type="text" class="main__chatInput" placeholder="Type your message" />
+            </div>
+        </div>
+    </div> -->
+</body>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+
+<script>
+   let userDetails = localStorage
+    // console.log(userDetails["name"]);
+    // console.log(userDetails["email"]);
+    // console.log(userDetails["imgUrl"]);
+    const userName = userDetails["name"]
+    const userEmail = userDetails["email"]
+    const userImgUrl = userDetails["imgUrl"]
+
+    const profileImg = document.createElement("img")
+    profileImg.src = userImgUrl;
+    profileImg.style.height = "40px"
+    profileImg.style.width = "40px"
+    profileImg.style.borderRadius = "50%"
+    document.querySelector(".profile").append(profileImg);
+
+    const profileName = document.createElement("div");
+    profileName.textContent = userName;
+    const profileOptions = document.querySelector(".profileOptions")
+    profileOptions.insertBefore(profileName, profileOptions.firstElementChild)
+
+    function signOut() {
+        localStorage.clear();
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log("User signed out.");
+      });
+    }
+</script>
+<script src="script.js"></script>
+</html>
